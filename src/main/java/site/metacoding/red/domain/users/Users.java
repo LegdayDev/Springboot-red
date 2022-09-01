@@ -1,5 +1,7 @@
 package site.metacoding.red.domain.users;
 
+
+
 import java.sql.Timestamp;
 
 import lombok.Getter;
