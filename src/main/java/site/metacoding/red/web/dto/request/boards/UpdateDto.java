@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WriteDto {
+public class UpdateDto {
 	private String title;
 	private String content;
-	private Integer usersId;
 }

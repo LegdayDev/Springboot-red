@@ -22,7 +22,7 @@ public class Users {
 		this.email = updateDto.getEmail();
 	}
 
-	public void 패스워드수정(String password) {
+	public void passwordUpdate(String password) {
 		this.password = password;
 	}
 }

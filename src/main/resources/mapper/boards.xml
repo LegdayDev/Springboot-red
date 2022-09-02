@@ -20,7 +20,7 @@
 	<update id="update">
 		UPDATE boards SET 
 			title=#{title}, 
-			content=#{content}, 
+			content=#{content} 
 		WHERE id=#{id}
 	</update>
 	

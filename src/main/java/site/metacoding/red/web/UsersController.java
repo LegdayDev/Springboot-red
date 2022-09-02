@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import site.metacoding.red.domain.boards.BoardsDao;
 import site.metacoding.red.domain.users.Users;
 import site.metacoding.red.domain.users.UsersDao;
+import site.metacoding.red.web.dto.request.boards.WriteDto;
 import site.metacoding.red.web.dto.request.users.JoinDto;
 import site.metacoding.red.web.dto.request.users.UpdateDto;
 import site.metacoding.red.web.dto.response.RespDto;
@@ -21,55 +23,46 @@ public class UsersController {
 
 	//final로 정의한 필드는 해당 클래스가 new되어야 한다.
 	private final UsersDao usersDao;
+	private final BoardsDao boardsDao;
 	
 	@PostMapping("/users")
-	public RespDto<?> postInsert(JoinDto joinDto) {
+	public RespDto<?> usersInsert(JoinDto joinDto) {
 		//유효성검사
 		
 		usersDao.insert(joinDto);
 		return new RespDto<>(1,"회원가입성공",null); 
 	}
-	
 	@GetMapping("/users/{id}")
-	public RespDto<?> findById(@PathVariable Integer id) {
+	public RespDto<?> usersFindById(@PathVariable Integer id) {
 		return new RespDto<>(1,"성공",usersDao.findById(id));
 	}
-	
 	@GetMapping("/users")
-	public RespDto<?> findAll(){
+	public RespDto<?> usersFindAll(){
 		return new RespDto<>(1,"성공",usersDao.findAll());
 	}
-	
 	@PutMapping("/users/{id}")
-	public RespDto<?> update(@PathVariable Integer id,UpdateDto updateDto){
-		//1번 : id로 select 하자.(영속화)
+	public RespDto<?> usersUpdate(@PathVariable Integer id,UpdateDto updateDto){
 		Users usersPS = usersDao.findById(id);
-		//2번 : 변경
-		
-		
 		usersPS.allUpdate(updateDto);
-		
 		usersDao.update(usersPS);
 		
 		return new RespDto<>(1,"회원수정 완료",null);
 	}
-
 	@PutMapping("/users/{id}/password")
-	public RespDto<?> updatePassword(@PathVariable Integer id, String password){
-		// 1번 영속화
+	public RespDto<?> usersUpdatePassword(@PathVariable Integer id, String password){
 		Users usersPS = usersDao.findById(id);
-		
-		// 2번 변경
-		usersPS.패스워드수정(password);
-		
-		// 3번 전체 업데이트
+
+		usersPS.passwordUpdate(password);
+
 		usersDao.update(usersPS);
 		return new RespDto<>(1, "회원패스워드 수정완료", null);
 	}
-	
 	@DeleteMapping("/users/{id}")
-	public RespDto<?> delete(@PathVariable Integer id){
+	public RespDto<?> usersDelete(@PathVariable Integer id){
 		usersDao.delete(id);
 		return new RespDto<>(1,"회원탈퇴 완료",null);
 	}
+	
+	
+	
 }
