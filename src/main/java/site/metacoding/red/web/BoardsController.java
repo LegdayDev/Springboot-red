@@ -27,7 +27,7 @@ public class BoardsController {
 	}
 	@GetMapping("/boards/{id}")
 	public RespDto<?> boardsFindById(@PathVariable Integer id){
-		return new RespDto<>(1,id+"번 게시물확인",boardsDao.findById(id));
+		return new RespDto<>(1,id+"번 게시물확인",boardsDao.findByIdToDetail(id));
 	}
 	@GetMapping("/boards")
 	public RespDto<?> boardsFindAll(){
@@ -40,7 +40,6 @@ public class BoardsController {
 		boardsDao.update(boardsPS);
 		
 		return new RespDto<>(1,"게시물수정완료",boardsDao.findById(id));
-		
 	}
 	@PutMapping("boards/{id}/content")
 	public RespDto<?> boardsContentUpdate(@PathVariable Integer id, String content){
